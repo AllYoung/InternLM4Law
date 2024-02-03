@@ -31,7 +31,7 @@ from openxlab.model import download
 
 def init():
     model_dir = snapshot_download('admlrz/lirongzhen-pufa-model'
-                                  , cache_dir='/root/code/lrz')
+                                  , cache_dir='./')
     os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
     # 下载模型
     os.system('huggingface-cli download --resume-download sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 --local-dir sentence-transformer')
@@ -270,5 +270,5 @@ def main():
 
 
 if __name__ == "__main__":
-    #init()
+    init()
     main()
