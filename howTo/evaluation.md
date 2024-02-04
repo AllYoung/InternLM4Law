@@ -69,16 +69,14 @@ python run.py \ --datasets ceval_gen \
 - 基础模型得分
 
   <img src=".\assets\image-20240204202322136.png" alt="image-20240204202322136" />
-  <img src=".\assets\image-20240204202322136.png" alt="image-20240204202322136" style="zoom:23%;" />
-
 
 - 微调模型得分
 
-  ![image-20240204202313450](.\assets\image-20240204202313450.png)
+  <img src=".\assets\image-20240204202313450.png" alt="20240204202313450" />
 
 - 微调后量化模型得分
 
-  ![image-20240204202259676](.\assets\image-20240204202259676.png)
+  <img src=".\assets\image-20240204202259676.png" alt="20240204202259676" />
 
   对比来看，模型训练之后对eval-law得分明显提高，但是量化评分不太理想。不过评测好像具有随机性，一次评测的结果也不能代表模型的整体性能
 
@@ -86,4 +84,4 @@ python run.py \ --datasets ceval_gen \
 
 因为lawbench长文本测评，测评时间需要十几个小时，目前还没有出结果，waiting......
 
-![image-20240204202247277](.\assets\image-20240204202247277.png)
+<img src=".\assets\image-20240204202247277.png" alt="20240204202247277" />
