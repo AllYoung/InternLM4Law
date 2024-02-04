@@ -120,13 +120,13 @@ os.system("python -u launch.py")
 
 备注：创建GitHub仓库记得勾选 `Add a README file`
 
-![img](assets\create_github_repo.7b92053f.png)
+![img](..\assets\create_github_repo.7b92053f.png)
 
 ### 步骤2：编写应用代码
 
 编写应用代码，本例采用Pytorch构建分类预测函数，创建一个命名为 `app.py` 的文件，代码如下所示：
 
-![img](assets\create_github_repo1.8a5a44c7.png)
+![img](..\assets\create_github_repo1.8a5a44c7.png)
 
 构建分类器的 `app.py` 代码如下：
 
@@ -160,7 +160,7 @@ copy
 
 **上传示例的图片至github仓库中，并命名为cheetah.jpg**
 
-![img](assets\cheetah.17dc37eb.jpg)
+![img](..\assets\cheetah.17dc37eb.jpg)
 
 > 备注：若应用所需的模型文件较大，可尝试先将模型存放至模型中心进行托管，再通过平台提供的openxlab的SDK进行使用
 >
@@ -171,7 +171,7 @@ copy
 
 配置应用运行所需的环境，将python相关的依赖包写入 `requirements.txt` 文档中
 
-![img](assets\create_github_repo2.db2a9ef9.png)
+![img](..\assets\create_github_repo2.db2a9ef9.png)
 
 `requirements.txt` 填入的环境如下：
 
@@ -184,7 +184,7 @@ copy
 
 上传图片后完整仓库图如下：
 
-![img](assets\create_github_repo10.cd94543e.png)
+![img](..\assets\create_github_repo10.cd94543e.png)
 
 ### 步骤4：创建应用仓库
 
@@ -192,17 +192,17 @@ copy
 
 创建入口在导航栏的右侧 +创建，如下如所示：
 
-![img](assets\crate_app_step1.00ba92bc.png)
+![img](..\assets\crate_app_step1.00ba92bc.png)
 
 选择Gradio组件，开始创建
 
-![img](assets\create_app_2.c9d69e14.png)
+![img](..\assets\create_app_2.c9d69e14.png)
 
 ### 步骤5：进行应用配置
 
 填写图像分类器应用的基础信息，包括应用的名称和应用对应的任务类型，还有记得填入存储有图像分类器的GitHub仓库，选择硬件资源后，即可立即创建啦~
 
-![img](assets\create_github_repo4.dda927ce.png)
+![img](..\assets\create_github_repo4.dda927ce.png)
 
 > 备注：
 >
@@ -213,7 +213,7 @@ copy
 
 ### 步骤6：完成应用构建和启动
 
-查看日志，调试应用代码，若应用代码无问题，运行成功，可体验应用，并将应用进行公开![img](assets\create_github_repo6.c666feb0.png)
+查看日志，调试应用代码，若应用代码无问题，运行成功，可体验应用，并将应用进行公开![img](..\assets\create_github_repo6.c666feb0.png)
 
 
 
@@ -225,14 +225,14 @@ copy
 
 
 
-![img](assets\create_github_repo7.0b562676.png)
+![img](..\assets\create_github_repo7.0b562676.png)
 
 ### 步骤7：查看应用并公开
 
 应用成功运行后，可以用示例进行测试应用是否能跑通，跑通后可以将应用进行公开，让更多人可以看到您的应用哦~
 
-![img](assets\create_github_repo8.95e2e48d.png)
+![img](..\assets\create_github_repo8.95e2e48d.png)
 
 公开后，可以在应用中心的列表页-全部中找到您构建的应用
 
-![img](assets\create_github_repo9.82bb801d.png)
+![img](..\assets\create_github_repo9.82bb801d.png)
