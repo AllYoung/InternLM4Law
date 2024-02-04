@@ -68,7 +68,9 @@ python run.py \ --datasets ceval_gen \
 
 - 基础模型得分
 
-  <img src=".\assets\image-20240204202322136.png" alt="image-20240204202322136";" />
+  <img src=".\assets\image-20240204202322136.png" alt="image-20240204202322136" />
+  <img src=".\assets\image-20240204202322136.png" alt="image-20240204202322136" style="zoom:23%;" />
+
 
 - 微调模型得分
 
