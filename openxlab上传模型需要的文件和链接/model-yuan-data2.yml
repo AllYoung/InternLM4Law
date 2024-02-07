@@ -1,0 +1,40 @@
+#把你上传中断没能成功上传的重新修改，把已经上传的删掉。
+Collections:
+- Name: "internlm2-chat-7b"
+  License: "Apache-2.0"
+  Framework: "[]"
+  Paper: {}
+  Code:
+    URL: "https://github.com/InternLM/InternLM"
+Models:
+- Name: "tokenization_internlm2.py"
+  Results:
+  - Task: "Text Generation"
+    Dataset: "none"
+  Weights: "tokenization_internlm2.py"
+- Name: "tokenization_internlm2_fast.py"
+  Results:
+  - Task: "Text Generation"
+    Dataset: "none"
+  Weights: "tokenization_internlm2_fast.py"
+- Name: "tokenizer_config.json"
+  Results:
+  - Task: "Text Generation"
+    Dataset: "none"
+  Weights: "tokenizer_config.json"
+- Name: "tokenizer.model"
+  Results:
+  - Task: "Text Generation"
+    Dataset: "none"
+  Weights: "tokenizer.model"
+- Name: "pytorch_model.bin.index.json"
+  Results:
+  - Task: "Text Generation"
+    Dataset: "none"
+  Weights: "pytorch_model.bin.index.json"
+- Name: "tokenizer.json"
+  Results:
+  - Task: "Text Generation"
+    Dataset: "none"
+  Weights: "tokenizer.json"
+  

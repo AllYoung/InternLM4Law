@@ -1,18 +1,14 @@
 # InternLM4Law
 
-<img src=".\assets\robot.png" alt="image-20240203124320272" style="zoom:23%;" />
-
-
+![robot](assets/robot.png)
 
 ## Introduction 🔊
 
 **InternLM4Law**是一个**民法典领域**的**法律大模型**，旨在解决民法领域中常见的问题和要求，为用户提供高质量、高准确性且高专业性的法律咨询和回答。InternLM4Law是基于对[InternLM2](https://github.com/InternLM/InternLM.git)微调和利用RAG技术外挂专业知识库而得到的，主要特点如下：
 
-- **专业性**：我们的团队将在专有的法律指令数据集上进行高效微调，确保模型具备准确的法律知识支持，并能够以专业的语气进行回答。
-- **综合能力**：通过外挂专业知识库和RAG技术，我们的法律大模型将具备丰富的背景知识和能力，能够更好地理解和回答用户提出的问题。
-- **可定制化**：我们将提供量化部署的模型，并产出demo，以便用户可以快速评估和使用我们的法律大模型。
-
-
+- **专业性：**我们的团队将在专有的法律指令数据集上进行高效微调，确保模型具备准确的法律知识支持，并能够以专业的语气进行回答。
+- **综合能力：**通过外挂专业知识库和RAG技术，我们的法律大模型将具备丰富的背景知识和能力，能够更好地理解和回答用户提出的问题。
+- **可定制化：**我们将提供量化部署的模型，并产出demo，以便用户可以快速评估和使用我们的法律大模型。
 
 ## 模型demo-如何使用 💻
 
@@ -58,7 +54,7 @@ demo链接：https://openxlab.org.cn/apps/detail/allyoung/InternLM4Law
 "output": "根据《中华人民共和国婚姻法》的规定，离婚时涉及子女的抚养问题，应当依法达成协议或者经人民法院判决。因此，您可以向法院提起诉讼，请求男方给予子女抚养费并将子女的抚养权和姓氏归您。同时，如果男方确实存在出轨行为，您可以请求法院判决男方支付精神损害赔偿。"}
 ```
 
-- **法律文书理解**
+- 法律文书理解
 
 
 ```json
@@ -68,7 +64,7 @@ demo链接：https://openxlab.org.cn/apps/detail/allyoung/InternLM4Law
 
 ```
 
-- **合同类型判断**
+- 合同类型判断
 
 
 ```json
@@ -87,15 +83,243 @@ demo链接：https://openxlab.org.cn/apps/detail/allyoung/InternLM4Law
 "output": "法人的法定代表人由谁担任,是依据法律的规定或者法人章程的规定确定的。一是根据法律规定确定。有的法律,如公司法规定了公司的法定代表人由谁担任：“公司法定代表人依照公司章程的规定,由董事长、执行董事或者经理担任,并依法登记。公司法定代表人变更,应当办理变更登记。”再如,民办教育促进法规定,民办学校的法定代表人由理事长、董事长或者校长担任。二是如果没有法律规定,就要根据法人章程来确定法人的法定代表人。法定代表人对外以法人名义进行民事活动时,其与法人之间并非代理关系,而是代表关系,且其代表职权来自法律的明确授权,故不需要有法人的授权委托书......"}
 ```
 
-## 作者（以下排名不分先后）
+## RAG
 
- [@admlrz](https://github.com/admlrz) 
- [@YongXie66](https://github.com/YongXie66)
- [@ch521-od](https://github.com/ch521-od)
- [@ljn12yyds](https://github.com/ljn12yyds)
- [@AllYoung](https://github.com/AllYoung)
+### 环境配置
+
+- 安装依赖
+
+```bash
+python -m pip install --upgrade pip
+
+pip install modelscope==1.9.5
+pip install transformers==4.35.2
+pip install streamlit==1.24.0
+pip install sentencepiece==0.1.99
+pip install accelerate==0.24.1
+
+pip install langchain==0.0.292
+pip install gradio==4.4.0
+pip install chromadb==0.4.15
+pip install sentence-transformers==2.2.2
+pip install unstructured==0.10.30
+pip install markdown==3.3.7
+```
+
+- 下载 [Sentence Transformer](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2)
+
+```bash
+pip install -U huggingface_hub
+```
+
+```python
+import os
+os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
+os.system('huggingface-cli download --resume-download sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 --local-dir /root/data/model/sentence-transformer')
+```
+
+### 知识库搭建
+
+由于源码中不支持使用pdf文件构建数据库，因此需要做一些修改，添加对pdf文件的支持。
+
+- 安装相关的库
+
+```bash
+pip install "unstructured[pdf]"
+```
+
+- 数据收集 & 数据加载 & 构建向量数据库
+
+  整合了数据收集 & 数据加载 & 构建向量数据库过程，详见脚本`/root/data/create_db.py`
+
+```bash
+python /root/data/create_db.py
+```
+
+### InternLM 接入 LangChain
+
+- 从 LangChain.llms.base.LLM 类继承一个子类，并重写构造函数与 `_call` 函数，详见`/root/data/LLM.py`
+
+```bash
+python /root/data/LLM.py
+```
+
+- demo效果
+
+  基于 Gradio 框架部署到 Web 网页，详见`/root/data/web_demo.py`
+
+![image-20240203154129564](assets/image-20240203154129564.png)
+
+## 微调
+
+使用[**XTuner**](https://github.com/InternLM/xtuner)进行微调，对 InternLM2 的支持度最高
+
+- 安装XTuner
+
+```bash
+git clone -b v0.1.9 https://gitee.com/Internlm/xtuner
+cd xtuner
+pip install -e '.[all]'
+```
+
+- 训练
+
+  使用deepspeed加速，具体配置详见 `internlm2_chat_7b_qlora_law_e3_copy.py`
+
+```bash
+xtuner train ./internlm2_chat_7b_qlora_law_e3_copy.py --deepspeed deepspeed_zero2
+```
+
+- LoRA转换为HaggingFace格式
+
+```bash
+xtuner convert pth_to_hf ./internlm2_chat_7b_qlora_law_e3.py ./work_dirs/internlm_chat_7b_qlora_law_e3_copy/epoch_3.pth ./hf
+```
+
+- 合并基座模型和LoRA
+
+```bash
+xtuner convert merge ./internlm2-chat-7b-sft ./hf ./merged --max-shard-size 2GB
+```
+
+- chat
+
+```bash
+xtuner chat ./merged --prompt-template internlm_chat
+```
 
 
+
+## 量化
+
+- 安装LMDeploy
+
+```bash
+pip install -U lmdeploy
+```
+
+- 模型转换，离线转换为TurboMind格式
+
+```bash
+lmdeploy convert internlm-chat-7b  /root/share/temp/model_repos/internlm2-chat-7b/
+```
+
+- kv量化
+
+```bash
+lmdeploy lite calibrate /root/hf4_merge/ --calib-dataset 'ptb' --calib-samples 128 --calib-seqlen 2048 --work-dir ./quant_output_kv
+lmdeploy lite kv_qparams ./quant_output_kv /root/workspace/triton_models/weights/ --num-tp 1
+```
+
+- 4 bit 量化
+
+```bash
+lmdeploy lite auto_awq /root/hf4_merge/ --w-bits 4 --w-group-size 128 --work-dir ./quant_output_w4
+```
+
+- 转成TurboMind格式
+
+```bash
+lmdeploy convert internlm2-chat-7b ./quant_output_w4 --model-format awq --group-size 128 --dst-path ./workspace_w4quant
+```
+
+- chat
+
+```bash
+lmdeploy chat turbomind ./workspace_w4quant
+```
+
+如果量化显存效果不好，请减小`triton_models/config`文件中的`cache_max_entry_count`值
+
+## 部署
+
+
+
+## 评测
+
+- #### 环境包与数据集准备
+
+  克隆opencompass仓库安装依赖
+
+  ​	
+
+  ```
+  git clone https://github.com/open-compass/opencompass
+  cd opencompass
+  pip install -e .
+  ```
+
+  准备数据 并解压
+
+  ```
+  cp /share/temp/datasets/OpenCompassData-core-20231110.zip /root/opencompass/
+  unzip OpenCompassData-core-20231110.zip
+  ```
+
+  后面评测的时候发现lawbench的数据包并没有整合在其中，所以这里单独从lawbench项目库中将数据包复制过来
+
+  ```
+  git clone https://gitee.com/ljn20001229/LawBench.git
+  cp -r /root/personal_assistant/LawBench/data/one_shot /root/personal_assistant/opencompass/data/lawbench
+  cp -r /root/personal_assistant/LawBench/data/zero_shot /root/personal_assistant/opencompass/data/lawbench
+  ```
+
+- #### 评测运行 
+
+​	opencompass评测可以使用一些写好的config配置文件做评测，也可以直接在命令行写指令 
+
+```
+python run.py --datasets ceval_ppl mmlu_ppl \
+--hf-path huggyllama/llama-7b \  # HuggingFace 模型地址
+--model-kwargs device_map='auto' \  # 构造 model 的参数
+--tokenizer-kwargs padding_side='left' truncation='left' use_fast=False \  # 构造 tokenizer 的参数
+--max-out-len 100 \  # 最长生成 token 数
+--max-seq-len 2048 \  # 模型能接受的最大序列长度
+--batch-size 8 \  # 批次大小
+--no-batch-padding \  # 不打开 batch padding，通过 for loop 推理，避免精度损失
+--num-gpus 1  # 运行该模型所需的最少 gpu 数
+```
+
+​	想要换不同的模型和数据集可以直接在参数后更改配置文件和模型地址，非常方便。
+
+这里直接在命令行写指令进行评测 
+
+`/root/personal_assistant/config/a/work_dirs/hf_merge`是模型路径，这里必须得是完整的（个人操作需要对照自己模型所在位置）。
+
+```
+python run.py \ --datasets ceval_gen \ 
+--hf-path /root/personal_assistant/config/a/work_dirs/hf_merge \ 
+--tokenizer-path /root/personal_assistant/config/a/work_dirs/hf_merge\ 
+--tokenizer-kwargs padding_side='left' truncation='left' trust_remote_code=True \ 
+--model-kwargs device_map='auto' trust_remote_code=True \ 
+--max-seq-len 2048 \ 
+--max-out-len 1000 \ 
+--batch-size 2 \ 
+--num-gpus 1 \ 
+--debug
+```
+
+- #### 评测结果
+
+在ceval数据上的评测结果
+
+对比对象主要是微调后的模型，原基准模型，与量化模型在ceval中eval-law数据上的对比
+
+​	基础模型得分
+
+![11](assets/11.png)
+
+​	微调后模型得分
+
+![12](assets/12.png)
+
+​	微调模型量化后得分
+
+![13](assets/13.png)
+
+对比来看，模型训练之后对eval-law得分明显提高，但是量化评分不理想。
+
+可能原因：评测具有随机性，一次评测的结果也不能代表模型的整体性能。 
 
 ## 声明⚠
 
@@ -114,3 +338,6 @@ demo链接：https://openxlab.org.cn/apps/detail/allyoung/InternLM4Law
 感谢上海人工智能实验室推出的 **[书生·浦语大模型实战营]([InternLM/tutorial (github.com)](https://github.com/InternLM/tutorial))** 学习活动！
 
 感谢上海人工智能实验室对本项目的技术指导和算力支持！
+
+
+
