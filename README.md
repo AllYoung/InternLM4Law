@@ -12,7 +12,9 @@
 
 ## 模型demo-如何使用 💻
 
-==demo链接==
+demo链接：https://openxlab.org.cn/apps/detail/allyoung/InternLM4Law
+
+
 
 ## 数据集
 
